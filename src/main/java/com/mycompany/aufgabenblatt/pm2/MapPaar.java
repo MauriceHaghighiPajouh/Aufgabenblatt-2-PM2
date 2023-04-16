@@ -7,33 +7,32 @@ import java.util.Map.Entry;
  * @author mauricehaghighi
  */
 public class MapPaar<K, V> implements Entry {
-    
-  
 
-   
+    private K key;
+    private V value;
 
-    public MapPaar() {
-       
-        
-    
+    public MapPaar(K key, V value) {
+        this.key = key;
+        this.value = value;
+
     }
-    
-    
-    
 
     @Override
     public Object getKey() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return key;
     }
 
     @Override
     public Object getValue() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return value;
     }
 
     @Override
-    public Object setValue(Object value) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Object setValue(Object newVal) {
+        V oldVal = this.value;
+        this.value = (V) newVal;
+        return oldVal;
+
     }
 
 }
