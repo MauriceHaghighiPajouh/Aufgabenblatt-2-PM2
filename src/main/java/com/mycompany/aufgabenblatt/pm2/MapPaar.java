@@ -16,17 +16,23 @@ public class MapPaar<K, V> implements Entry {
         this.value = value;
 
     }
-
+    // return schluessel
     @Override
     public Object getKey() {
         return key;
     }
-
+    // return wert
     @Override
     public Object getValue() {
         return value;
     }
-
+    
+    /**
+     * 
+     * 
+     * @param newVal ( new value)
+     * @return oldVal ( old value)
+     */
     @Override
     public Object setValue(Object newVal) {
         V oldVal = this.value;

@@ -13,18 +13,39 @@ import java.util.Set;
  * @author mauricehaghighi
  */
 public class PM2Map<K, V> implements Map {
-    
-     private MapPaar<K, V>[] pairs;
 
-
+    private MapPaar<K, V>[] pairs;
 
     public PM2Map() {
 
     }
 
+    //hilfsmethode
+    public void expand() {
+
+        if (pairs.length == size()) {
+            MapPaar[] newPairs = new MapPaar[(pairs.length + 2) * 2];
+
+            for (int i = 0; i < pairs.length; i++) {
+                newPairs[i] = pairs[i];
+            }
+            pairs = newPairs;
+
+        }
+
+    }
+
     @Override
     public int size() {
-        return pairs.length;
+        int sum = 0;
+
+        for (int i = 0; i < pairs.length; i++) {
+            if (pairs[i] != null) {
+                sum++;
+            }
+        }
+
+        return sum;
 
     }
 
@@ -44,7 +65,7 @@ public class PM2Map<K, V> implements Map {
 
     @Override
     public boolean containsKey(Object key) {
-        
+
         for (MapPaar<K, V> element : pairs) {
             if (element.getKey().equals(key)) {
                 return true;
@@ -65,10 +86,11 @@ public class PM2Map<K, V> implements Map {
 
     }
 
+    // gibt wert vom uebergebenen schluessel zurueck
     @Override
     public V get(Object key) {
 
-        for (MapPaar<K, V> element : pairs ) {
+        for (MapPaar<K, V> element : pairs) {
             if (element.getKey().equals(key)) {
                 return (V) element.getValue();
             }
@@ -78,9 +100,33 @@ public class PM2Map<K, V> implements Map {
 
     @Override
     public V put(Object key, Object value) {
-        throw new UnsupportedOperationException("??");
+        /*durchsucht das array nach unserem schluessel
+        falls gefunden, wird der wert ersetzt und der alte wert wird zurueck gegeben
+         */
+
+        for (MapPaar<K, V> element : pairs) {
+            if (element.getKey().equals(key)) {
+                V oldVal = (V) element.getValue();
+                element.setValue(value);
+                return oldVal; // an dieser Stelle wird die Methode verlassen
+            }
+        }
+
+        //falls nichts gefunden wird, gibts n neuen eintrag
+        MapPaar<K, V> entry = new MapPaar(key, value);
+        expand();  // array erweitern weil offensichtlich kein platz
+
+        for (int i = 0; i < pairs.length; i++) {
+            if (pairs[i].equals(null)) {
+                pairs[i] = entry;
+            }
+        }
+        return null;
 
     }
+    
+    
+    
 
     @Override
     public K remove(Object key) {
