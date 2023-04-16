@@ -10,24 +10,12 @@ public class MapPaar<K, V> implements Entry {
     
   
 
-    private MapPaar<K, V>[] pairs;
+   
 
     public MapPaar() {
        
-        pairs = new MapPaar[0];
-    
-    }
-    
-
-    public int getArraySize() {
-        return pairs.length;
         
-    }
     
-    
-    
-    public MapPaar<K, V>[] getArray() {
-        return pairs;
     }
     
     

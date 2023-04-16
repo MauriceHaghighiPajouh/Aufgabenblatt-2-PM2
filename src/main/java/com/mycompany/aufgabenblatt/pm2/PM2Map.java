@@ -36,9 +36,7 @@ public class PM2Map<K, V> implements Map {
             for (MapPaar element : pairs) {
                 if (element != null) {
                     return false;
-
                 }
-
             }
         }
         return true;
