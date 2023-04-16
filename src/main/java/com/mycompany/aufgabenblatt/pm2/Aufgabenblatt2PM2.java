@@ -11,6 +11,10 @@ package com.mycompany.aufgabenblatt.pm2;
 public class Aufgabenblatt2PM2 {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+       PM2Map test = new PM2Map();
+       System.out.println(test.size());
+       System.out.println(test.isEmpty());
+     
+        
     }
 }
