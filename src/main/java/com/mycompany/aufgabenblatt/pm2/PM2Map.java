@@ -13,27 +13,27 @@ import java.util.Set;
  * @author mauricehaghighi
  */
 public class PM2Map<K, V> implements Map {
+    
+     private MapPaar<K, V>[] pairs;
 
-    MapPaar _map;
+
 
     public PM2Map() {
-
-        this._map = new MapPaar();
 
     }
 
     @Override
     public int size() {
-        return _map.getArraySize();
+        return pairs.length;
 
     }
 
     @Override
     public boolean isEmpty() {
-        if (_map.getArraySize() == 0) {
+        if (pairs.length == 0) {
             return true;
         } else {
-            for (MapPaar element : _map.getArray()) {
+            for (MapPaar element : pairs) {
                 if (element != null) {
                     return false;
 
@@ -46,7 +46,8 @@ public class PM2Map<K, V> implements Map {
 
     @Override
     public boolean containsKey(Object key) {
-        for (MapPaar<K, V> element : _map.getArray()) {
+        
+        for (MapPaar<K, V> element : pairs) {
             if (element.getKey().equals(key)) {
                 return true;
             }
@@ -57,7 +58,7 @@ public class PM2Map<K, V> implements Map {
 
     @Override
     public boolean containsValue(Object value) {
-        for (MapPaar<K, V> element : _map.getArray()) {
+        for (MapPaar<K, V> element : pairs) {
             if (element.getValue().equals(value)) {
                 return true;
             }
@@ -67,24 +68,27 @@ public class PM2Map<K, V> implements Map {
     }
 
     @Override
-    public Object get(Object key) {
-        
-        for (MapPaar<K, V> element : _map.getArray()) {
+    public V get(Object key) {
+
+        for (MapPaar<K, V> element : pairs ) {
             if (element.getKey().equals(key)) {
-                return element.getValue();
+                return (V) element.getValue();
             }
         }
         return null;
     }
 
     @Override
-    public Object put(Object key, Object value) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public V put(Object key, Object value) {
+        throw new UnsupportedOperationException("??");
+
     }
 
     @Override
-    public Object remove(Object key) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public K remove(Object key) {
+
+        throw new UnsupportedOperationException("??");
+
     }
 
     @Override
