@@ -46,17 +46,35 @@ public class PM2Map<K, V> implements Map {
 
     @Override
     public boolean containsKey(Object key) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        for (MapPaar<K, V> element : _map.getArray()) {
+            if (element.getKey().equals(key)) {
+                return true;
+            }
+        }
+        return false;
+
     }
 
     @Override
     public boolean containsValue(Object value) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        for (MapPaar<K, V> element : _map.getArray()) {
+            if (element.getValue().equals(value)) {
+                return true;
+            }
+        }
+        return false;
+
     }
 
     @Override
     public Object get(Object key) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        for (MapPaar<K, V> element : _map.getArray()) {
+            if (element.getKey().equals(key)) {
+                return element.getValue();
+            }
+        }
+        return null;
     }
 
     @Override
