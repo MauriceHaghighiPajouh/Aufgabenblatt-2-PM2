@@ -4,6 +4,12 @@
  */
 package com.mycompany.aufgabenblatt.pm2;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -67,13 +73,8 @@ public class PM2MapTest {
      */
     @Test
     public void testGet() {
-    }
-
-    /**
-     * Test of put method, of class PM2Map.
-     */
-    @Test
-    public void testPut() {
+        test.put(007, "James Bond");
+        assertEquals("James Bond", test.get(007));
     }
 
     /**
@@ -81,6 +82,12 @@ public class PM2MapTest {
      */
     @Test
     public void testRemove() {
+        test.put(007, "James Bond");
+
+        test.remove(007);
+
+        assertEquals(null, test.get(007));
+
     }
 
     /**
@@ -88,6 +95,16 @@ public class PM2MapTest {
      */
     @Test
     public void testSortArray() {
+        test.put(1, "max");
+        test.put(2, "moritz");
+        test.put(3, "hans");
+        test.remove(1);
+        test.remove(2);
+
+        MapPaar __test[] = test.getArray();
+
+        assertEquals(3, __test[0].getKey());
+
     }
 
     /**
@@ -95,6 +112,15 @@ public class PM2MapTest {
      */
     @Test
     public void testPutAll() {
+        HashMap<Integer, String> testMap = new HashMap<>();
+        testMap.put(1, "moin");
+        testMap.put(2, "mahlzeit");
+
+        test.putAll(testMap);
+
+        assertEquals("moin", test.get(1));
+        assertEquals("mahlzeit", test.get(2));
+
     }
 
     /**
@@ -102,6 +128,13 @@ public class PM2MapTest {
      */
     @Test
     public void testClear() {
+        test.put(1, "max");
+        test.put(2, "moritz");
+        test.put(3, "hans");
+        test.clear();
+
+        assertEquals(0, test.size());
+
     }
 
     /**
@@ -109,6 +142,18 @@ public class PM2MapTest {
      */
     @Test
     public void testKeySet() {
+
+        Set<Integer> setTest = new HashSet();
+
+        test.put(1, "max");
+        test.put(2, "moritz");
+        test.put(3, "hans");
+
+        setTest = test.keySet();
+        assertTrue(setTest.contains(1));
+        assertTrue(setTest.contains(2));
+        assertTrue(setTest.contains(3));
+
     }
 
     /**
@@ -116,6 +161,14 @@ public class PM2MapTest {
      */
     @Test
     public void testValues() {
+
+        test.put(1, "max");
+        test.put(2, "moritz");
+
+        List<?> values = new ArrayList<>();
+        values = (List<?>) test.values();
+        values.contains("max");
+        values.contains("moritz");
     }
 
     /**
@@ -123,6 +176,15 @@ public class PM2MapTest {
      */
     @Test
     public void testEntrySet() {
+
+        test.put(1, "max");
+        test.put(2, "moritz");
+
+        Set<Map.Entry<Integer, String>> entrySet = test.entrySet();
+
+        assertFalse(entrySet.isEmpty());
+        assertEquals(2, entrySet.size());
+
     }
 
 }

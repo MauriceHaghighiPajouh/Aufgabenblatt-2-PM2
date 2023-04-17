@@ -86,9 +86,9 @@ public class PM2Map<K, V> implements Map<K, V> {
 
     @Override
     public boolean containsValue(Object value) {
-        
+
         for (MapPaar<K, V> element : pairs) {
-            
+
             if (element != null) {
                 if (element.getValue().equals(value)) {
                     return true;
@@ -154,16 +154,18 @@ public class PM2Map<K, V> implements Map<K, V> {
 
         for (int i = 0; i < pairs.length; i++) {
 
-            if (pairs[i].getKey().equals(key)) {         // es wird nach key gesucht
+            if (pairs[i] != null) {
 
-                V oldVal = pairs[i].getValue(); // falls fuendig, wird value gespeichert zum returnen
+                if (pairs[i].getKey().equals(key)) {         // es wird nach key gesucht
 
-                pairs[i] = null;        // das aktuelle element wird auf null gesetzt, da wir es removen
+                    V oldVal = pairs[i].getValue(); // falls fuendig, wird value gespeichert zum returnen
 
-                sortArray(i);       // hilfsmethode sortArray wird aufgerufen
+                    pairs[i] = null;        // das aktuelle element wird auf null gesetzt, da wir es removen
 
-                return oldVal;
+                    sortArray(i);       // hilfsmethode sortArray wird aufgerufen
 
+                    return oldVal;
+                }
             }
         }
 
@@ -173,7 +175,8 @@ public class PM2Map<K, V> implements Map<K, V> {
 
     public void sortArray(int startIndex) {     // wir muessen nicht das ganze array durchsuchen sondern wissen wo wir anfangen koennen
 
-        for (int i = startIndex; i < pairs.length; i++) {
+        for (int i = startIndex; i < pairs.length-1; i++) {
+            
             if (pairs[i] == null && pairs[i + 1] != null) {     // schiebt alle eintraege nach vorne, so dass null eintraege nur am ende des array stehen
 
                 pairs[i] = pairs[i + 1];
