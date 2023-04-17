@@ -12,7 +12,7 @@ import java.util.Set;
  *
  * @author mauricehaghighi
  */
-public class PM2Map<K, V> implements Map {
+public class PM2Map<K, V> implements Map<K, V> {
 
     private MapPaar<K, V>[] pairs;
 
@@ -99,7 +99,7 @@ public class PM2Map<K, V> implements Map {
     }
 
     @Override
-    public V put(Object key, Object value) {
+    public V put(K key, V value) {
         /*durchsucht das array nach unserem schluessel
         falls gefunden, wird der wert ersetzt und der alte wert wird zurueck gegeben
          */
@@ -124,25 +124,68 @@ public class PM2Map<K, V> implements Map {
         return null;
 
     }
-    
-    
-    
 
+    /**
+     *
+     * @param key
+     * @return the previous value associated with key, or null if there was no
+     * mapping for key.
+     */
     @Override
-    public K remove(Object key) {
+    public V remove(Object key) {
 
-        throw new UnsupportedOperationException("??");
+        for (int i = 0; i < pairs.length; i++) {
+            if (pairs[i].equals(key)) {         // es wird nach key gesucht
+
+                V oldVal = (V) pairs[i].getValue(); // falls fuendig, wird value gespeichert zum returnen
+
+                pairs[i] = null;        // das aktuelle element wird auf null gesetzt, da wir es removen
+
+                sortArray(i);       // hilfsmethode sortArray wird aufgerufen
+
+                return oldVal;
+
+            }
+        }
+
+        return null;        // siehe return in kommentaren
 
     }
 
-    @Override
-    public void putAll(Map m) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void sortArray(int startIndex) {     // wir muessen nicht das ganze array durchsuchen sondern wissen wo wir anfangen koennen
+
+        for (int i = startIndex; i < pairs.length; i++) {
+            if (pairs[i] == null && pairs[i + 1] != null) {     // schiebt alle eintraege nach vorne, so dass null eintraege nur am ende des array stehen
+
+                pairs[i] = pairs[i + 1];
+
+                pairs[i + 1] = null;
+
+            }
+        }
     }
 
+    @Override
+    public void putAll(Map<? extends K, ? extends V> m) {
+
+        for (Map.Entry<? extends K, ? extends V> entry : m.entrySet()) {
+
+            K key = entry.getKey();
+            V value = entry.getValue();
+
+            put(key, value);
+
+        }
+
+    }
+    // no doc needed
     @Override
     public void clear() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        for (int i = 0; i < pairs.length; i++) {
+           pairs[i]=null;
+        }
+
     }
 
     @Override
