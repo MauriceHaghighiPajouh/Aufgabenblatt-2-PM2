@@ -6,7 +6,7 @@ import java.util.Map.Entry;
  *
  * @author mauricehaghighi
  */
-public class MapPaar<K, V> implements Entry {
+public class MapPaar<K, V> implements Entry<K,V> {
 
     private K key;
     private V value;
@@ -18,12 +18,13 @@ public class MapPaar<K, V> implements Entry {
     }
     // return schluessel
     @Override
-    public Object getKey() {
+    public K getKey() {
         return key;
     }
+    
     // return wert
     @Override
-    public Object getValue() {
+    public V getValue() {
         return value;
     }
     

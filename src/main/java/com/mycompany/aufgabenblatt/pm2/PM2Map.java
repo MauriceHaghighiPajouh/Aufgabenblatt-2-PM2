@@ -4,7 +4,10 @@
  */
 package com.mycompany.aufgabenblatt.pm2;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -14,10 +17,14 @@ import java.util.Set;
  */
 public class PM2Map<K, V> implements Map<K, V> {
 
-    private MapPaar<K, V>[] pairs;
+    private MapPaar<K, V>[] pairs = new MapPaar[0];
 
     public PM2Map() {
 
+    }
+
+    public MapPaar<K, V>[] getArray() {
+        return pairs;
     }
 
     //hilfsmethode
@@ -67,8 +74,10 @@ public class PM2Map<K, V> implements Map<K, V> {
     public boolean containsKey(Object key) {
 
         for (MapPaar<K, V> element : pairs) {
-            if (element.getKey().equals(key)) {
-                return true;
+            if (element != null) {
+                if (element.getKey().equals(key)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -77,9 +86,13 @@ public class PM2Map<K, V> implements Map<K, V> {
 
     @Override
     public boolean containsValue(Object value) {
+        
         for (MapPaar<K, V> element : pairs) {
-            if (element.getValue().equals(value)) {
-                return true;
+            
+            if (element != null) {
+                if (element.getValue().equals(value)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -91,8 +104,10 @@ public class PM2Map<K, V> implements Map<K, V> {
     public V get(Object key) {
 
         for (MapPaar<K, V> element : pairs) {
-            if (element.getKey().equals(key)) {
-                return (V) element.getValue();
+            if (element != null) {
+                if (element.getKey().equals(key)) {
+                    return element.getValue();
+                }
             }
         }
         return null;
@@ -105,10 +120,12 @@ public class PM2Map<K, V> implements Map<K, V> {
          */
 
         for (MapPaar<K, V> element : pairs) {
-            if (element.getKey().equals(key)) {
-                V oldVal = (V) element.getValue();
-                element.setValue(value);
-                return oldVal; // an dieser Stelle wird die Methode verlassen
+            if (element != null) {
+                if (element.getKey().equals(key)) {
+                    V oldVal = element.getValue();
+                    element.setValue(value);
+                    return oldVal; // an dieser Stelle wird die Methode verlassen
+                }
             }
         }
 
@@ -117,8 +134,9 @@ public class PM2Map<K, V> implements Map<K, V> {
         expand();  // array erweitern weil offensichtlich kein platz
 
         for (int i = 0; i < pairs.length; i++) {
-            if (pairs[i].equals(null)) {
+            if (pairs[i] == null) {
                 pairs[i] = entry;
+                break;
             }
         }
         return null;
@@ -135,9 +153,10 @@ public class PM2Map<K, V> implements Map<K, V> {
     public V remove(Object key) {
 
         for (int i = 0; i < pairs.length; i++) {
-            if (pairs[i].equals(key)) {         // es wird nach key gesucht
 
-                V oldVal = (V) pairs[i].getValue(); // falls fuendig, wird value gespeichert zum returnen
+            if (pairs[i].getKey().equals(key)) {         // es wird nach key gesucht
+
+                V oldVal = pairs[i].getValue(); // falls fuendig, wird value gespeichert zum returnen
 
                 pairs[i] = null;        // das aktuelle element wird auf null gesetzt, da wir es removen
 
@@ -192,17 +211,48 @@ public class PM2Map<K, V> implements Map<K, V> {
 
     @Override
     public Set keySet() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        Set<K> keys = new HashSet<>(); // leichtgemacht?? hoffe i.O - einfach hashSet erstellt. Quasi eine mathematische Menge ohne Duplikate
+        // mal wieder durchs array durch.. alle pairs die nicht null sind werden dem set hinzugefuegt
+        // duplikate werden ohnehin nicht hinzugefuegt
+
+        for (MapPaar<K, V> pair : pairs) {
+            if (pair != null) {
+                keys.add(pair.getKey());
+            }
+        }
+        return keys;
+
     }
 
     @Override
     public Collection values() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // das selbe wie oben..
+        // hatten theoretisch nochmal ein set zurueck geben koennen
+        // stattdessen einfach liste von den values genommen
+
+        List<V> values = new ArrayList<>();
+        for (MapPaar<K, V> pair : pairs) {
+            if (pair != null) {
+                values.add(pair.getValue());
+            }
+        }
+        return values;
     }
 
     @Override
     public Set entrySet() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        Set<Map.Entry<K, V>> entries = new HashSet<>();
+
+        for (MapPaar<K, V> pair : pairs) {
+            if (pair != null) {
+
+                entries.add(pair); // muesste gehen.. da MapPaar Entry erweitert und "add" einen Entry erwartet.
+            }
+
+        }
+        return entries;
     }
 
 }
