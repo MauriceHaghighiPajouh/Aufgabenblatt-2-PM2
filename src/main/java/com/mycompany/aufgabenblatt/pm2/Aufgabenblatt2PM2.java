@@ -1,8 +1,9 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
-
 package com.mycompany.aufgabenblatt.pm2;
+
+import java.time.LocalDate;
 
 /**
  *
@@ -11,11 +12,11 @@ package com.mycompany.aufgabenblatt.pm2;
 public class Aufgabenblatt2PM2 {
 
     public static void main(String[] args) {
-       PM2Map test = new PM2Map();
-       
-       System.out.println(test.size());
-       System.out.println(test.isEmpty());
-     
         
+        Person person1 = new Person("Max", "Mustermann", 2, LocalDate.of(1990, 5, 20));
+        Person person2 = new Person("Max", "Mustermann", 1, LocalDate.of(1990, 5, 20));
+        
+        System.out.println(person1.toString());
+
     }
 }
