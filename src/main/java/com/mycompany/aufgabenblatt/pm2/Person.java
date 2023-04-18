@@ -9,7 +9,7 @@ import java.util.Optional;
  *
  * @author mauricehaghighi
  */
-public class Person<T> implements Comparable<T> {
+public class Person implements Comparable<Person> {
 
     private String firstName;
     private String lastName;
@@ -67,7 +67,7 @@ public class Person<T> implements Comparable<T> {
      *
      */
     @Override
-    public int compareTo(Object o) {
+    public int compareTo(Person o) {
 
         if (equals(o)) {
             return 0;
@@ -82,6 +82,7 @@ public class Person<T> implements Comparable<T> {
      * @return true if objects have same birthday, last name and first name
      * @return false if one of the 3 stated above is not the same
      */
+    
     @Override
     public boolean equals(Object obj) {
 
@@ -93,7 +94,7 @@ public class Person<T> implements Comparable<T> {
             return false;
         }
 
-        Person<?> other = (Person<?>) obj;
+        Person other = (Person) obj;
 
         boolean birthday = birthdate.equals(other.birthdate);
         boolean fnBool = firstName.equals(other.firstName);

@@ -46,7 +46,7 @@ public class Aufgabenblatt2PM2 {
 
         m.values().stream().sorted().forEach(n -> System.out.println(n));
         
-        // stream tba .. keine ahnung ob richtig implementiert
+        // stream tbd .. keine ahnung ob richtig implementiert
 
     }
 }
