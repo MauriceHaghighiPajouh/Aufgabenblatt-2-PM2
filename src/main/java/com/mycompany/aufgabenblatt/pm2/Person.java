@@ -1,7 +1,9 @@
 package com.mycompany.aufgabenblatt.pm2;
 
+import com.google.common.base.Preconditions;
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  *
@@ -21,12 +23,28 @@ public class Person<T> implements Comparable<T> {
         this.birthdate = bd;
     }
 
+    //guava API 
     public void setLastName(String newName) {
+        
+      Preconditions.checkNotNull(newName);
+      
+      
+       
         this.lastName = newName;
+        
 
     }
+    //klassische java doc precondition
+    /**
+     * precondition: kids not negative 
+     * @param kids 
+     */
 
     public void setNumberOfKids(int kids) {
+        assert(kids<=0);
+        
+       
+        
         this.numberOfKids = kids;
     }
 
@@ -37,6 +55,7 @@ public class Person<T> implements Comparable<T> {
      */
     @Override
     public int compareTo(Object o) {
+        
 
         if (equals(o)) {
             return 0;
@@ -44,9 +63,19 @@ public class Person<T> implements Comparable<T> {
         return -1;
 
     }
-
+    
+/**
+ * 
+ * @param obj
+ * @return true if objects have same birthday, last name and first name
+ * @return false if one of the 3 stated above is not the same
+ */
     @Override
     public boolean equals(Object obj) {
+        
+        //Optional<Person> opt = Optional.empty();
+        
+        
         // wenn es sich um das selbe Objekt handelt koennen wir direkt true returnen ( außer es ist schroedingers katze?)
         if (this == obj) {
             return true;
@@ -92,7 +121,10 @@ public class Person<T> implements Comparable<T> {
     // kurz recherchiert. soll tatsaechlich einfach nur infos ueber die instanz liefern, nichts wildes.
     @Override
     public String toString() {
-
+        //prueft einfach ob name oder geburtsdatum nicht null sind. falls doch, scheint irgendwas nicht iO zu sein
+        
+        Preconditions.checkArgument(firstName!=null && lastName != null && birthdate != null, "one of the attributes is null");
+        
         return "Vorname: " + firstName + " Nachname: " + lastName
                 + "\n Geburtsdatum : " + birthdate
                 + "\n Anzahl Kinder " + numberOfKids;
