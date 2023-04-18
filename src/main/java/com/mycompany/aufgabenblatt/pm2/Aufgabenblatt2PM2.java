@@ -5,6 +5,7 @@ package com.mycompany.aufgabenblatt.pm2;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
@@ -28,7 +29,7 @@ public class Aufgabenblatt2PM2 {
         Person person4 = new Person("Peter", "Tortellini", 3, LocalDate.of(2000, 11, 1));
         Person person5 = new Person("Julia", "Müller", 4, LocalDate.of(1998, 7, 3));
         Person person6 = new Person("Markus", "Schmidt", 5, LocalDate.of(1975, 10, 31));
-        Person person7 = new Person("Lisa", "Klein", 6, LocalDate.of(1992, 4, 22));
+        Person person7 = new Person("Lisa", "Klein", 0, LocalDate.of(1992, 4, 22));
         Person person8 = new Person("Simon", "Wagner", 7, LocalDate.of(1988, 8, 7));
         Person person9 = new Person("Laura", "Koch", 8, LocalDate.of(1995, 12, 15));
         Person person10 = new Person("Felix", "Bauer", 9, LocalDate.of(1983, 9, 29));
@@ -44,9 +45,11 @@ public class Aufgabenblatt2PM2 {
         m.put(person9.getLastName(), person9);
         m.put(person10.getLastName(), person10);
 
-        m.values().stream().sorted().forEach(n -> System.out.println(n));
+        //m.values().stream().sorted().forEach(n -> System.out.println(n));
         
-        // stream tbd .. keine ahnung ob richtig implementiert
-
+        m.values().stream().sorted(Comparator.comparingInt(Person::getNumberOfKids)).forEach(System.out::println);
+         
+        
+      
     }
 }

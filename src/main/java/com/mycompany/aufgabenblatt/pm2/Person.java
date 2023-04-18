@@ -17,6 +17,8 @@ public class Person implements Comparable<Person> {
     private LocalDate birthdate;
 
     public Person(String fn, String ln, int kids, LocalDate bd) {
+        assert(kids>=0);
+        
         this.firstName = fn;
         this.lastName = ln;
         this.numberOfKids = kids;
