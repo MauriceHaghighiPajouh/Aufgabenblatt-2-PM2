@@ -19,7 +19,7 @@ public class Aufgabenblatt2PM2 {
 
     public static void main(String[] args) {
 
-        PM2Map m = new PM2Map();
+        PM2Map<String, Person> m = new PM2Map();
 
         //extra keinen loop benutzt um genau aufzuzeigen was passiert
         // zuerst erstellen wir 10 neue Instanzen von Person, alle unterschiedlich
@@ -46,10 +46,7 @@ public class Aufgabenblatt2PM2 {
         m.put(person10.getLastName(), person10);
 
         //m.values().stream().sorted().forEach(n -> System.out.println(n));
-        
         m.values().stream().sorted(Comparator.comparingInt(Person::getNumberOfKids)).forEach(System.out::println);
-         
-        
-      
+
     }
 }
