@@ -11,10 +11,10 @@ import java.util.Optional;
  */
 public class Person implements Comparable<Person> {
 
-    private String firstName;
+    private final String firstName;
     private String lastName;
     private int numberOfKids;
-    private LocalDate birthdate;
+    private final LocalDate birthdate;
 
     public Person(String fn, String ln, int kids, LocalDate bd) {
         assert(kids>=0);
@@ -128,7 +128,7 @@ public class Person implements Comparable<Person> {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, numberOfKids, birthdate);
+        return Objects.hash(firstName, birthdate);
     }
 
     // kurz recherchiert. soll tatsaechlich einfach nur infos ueber die instanz liefern, nichts wildes.
