@@ -90,20 +90,21 @@ public class PM2MapTest {
 
     }
 
-    /**
-     * Test of sortArray method, of class PM2Map.
-     */
     @Test
-    public void testSortArray() {
-        test.put(1, "max");
-        test.put(2, "moritz");
-        test.put(3, "hans");
-        test.remove(1);
-        test.remove(2);
+    public void testRemoveNotNull() {
 
-        MapPaar __test[] = test.getArray();
-
-        assertEquals(3, __test[0].getKey());
+        test.put(007, "James bond");
+        test.put("moin", "James bond");
+        test.remove(007);
+        test.remove("moin");
+        
+        MapPaar[] testArr = test.getArray();
+        
+        boolean zero = testArr[0].getKey()=="_FREE_";
+        boolean one = testArr[1].getKey()=="_FREE_";
+        
+        assertEquals(true,zero&&one);
+        
 
     }
 

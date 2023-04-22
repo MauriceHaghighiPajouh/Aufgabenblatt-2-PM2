@@ -18,6 +18,8 @@ import java.util.Set;
 public class PM2Map<K, V> implements Map<K, V> {
 
     private MapPaar<K, V>[] pairs = new MapPaar[0];
+    
+    private int size = 0;
 
     public PM2Map() {
 
@@ -28,7 +30,7 @@ public class PM2Map<K, V> implements Map<K, V> {
     }
 
     //hilfsmethode
-    public void expand() {
+    private void expand() {
 
         if (pairs.length == size()) {
             MapPaar[] newPairs = new MapPaar[(pairs.length + 2) * 2];
@@ -44,15 +46,7 @@ public class PM2Map<K, V> implements Map<K, V> {
 
     @Override
     public int size() {
-        int sum = 0;
-
-        for (int i = 0; i < pairs.length; i++) {
-            if (pairs[i] != null) {
-                sum++;
-            }
-        }
-
-        return sum;
+        return size;
 
     }
 
@@ -124,7 +118,9 @@ public class PM2Map<K, V> implements Map<K, V> {
                 if (element.getKey().equals(key)) {
                     V oldVal = element.getValue();
                     element.setValue(value);
+                    this.size++;
                     return oldVal; // an dieser Stelle wird die Methode verlassen
+                    
                 }
             }
         }
@@ -134,8 +130,9 @@ public class PM2Map<K, V> implements Map<K, V> {
         expand();  // array erweitern weil offensichtlich kein platz
 
         for (int i = 0; i < pairs.length; i++) {
-            if (pairs[i] == null) {
+            if (pairs[i] == null || pairs[i].getKey()=="FREE") {
                 pairs[i] = entry;
+                this.size++;
                 break;
             }
         }
@@ -160,9 +157,9 @@ public class PM2Map<K, V> implements Map<K, V> {
 
                     V oldVal = pairs[i].getValue(); // falls fuendig, wird value gespeichert zum returnen
 
-                    pairs[i] = null;        // das aktuelle element wird auf null gesetzt, da wir es removen
+                    pairs[i] = new MapPaar<K,V>((K) "_FREE_",null);        // das aktuelle element wird auf null gesetzt, da wir es removen
 
-                    sortArray(i);       // hilfsmethode sortArray wird aufgerufen
+                         // hilfsmethode sortArray wird aufgerufen
 
                     return oldVal;
                 }
@@ -173,19 +170,7 @@ public class PM2Map<K, V> implements Map<K, V> {
 
     }
 
-    public void sortArray(int startIndex) {     // wir muessen nicht das ganze array durchsuchen sondern wissen wo wir anfangen koennen
-
-        for (int i = startIndex; i < pairs.length-1; i++) {
-            
-            if (pairs[i] == null && pairs[i + 1] != null) {     // schiebt alle eintraege nach vorne, so dass null eintraege nur am ende des array stehen
-
-                pairs[i] = pairs[i + 1];
-
-                pairs[i + 1] = null;
-
-            }
-        }
-    }
+ 
 
     @Override
     public void putAll(Map<? extends K, ? extends V> m) {
@@ -207,8 +192,10 @@ public class PM2Map<K, V> implements Map<K, V> {
     public void clear() {
 
         for (int i = 0; i < pairs.length; i++) {
-            pairs[i] = null;
+            pairs[i] = new MapPaar<K,V>((K)"_FREE_",null);
+            
         }
+        this.size=0;
 
     }
 
