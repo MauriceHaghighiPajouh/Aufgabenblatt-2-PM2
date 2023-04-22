@@ -159,6 +159,8 @@ public class PM2Map<K, V> implements Map<K, V> {
 
                     pairs[i] = new MapPaar<K,V>((K) "_FREE_",null);        // das aktuelle element wird auf null gesetzt, da wir es removen
 
+                    this.size--;
+                    
                     return oldVal;
                 }
             }
