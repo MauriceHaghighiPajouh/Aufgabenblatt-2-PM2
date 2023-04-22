@@ -56,7 +56,7 @@ public class PM2Map<K, V> implements Map<K, V> {
             return true;
         } else {
             for (MapPaar element : pairs) {
-                if (element != null) {
+                if (element != null && element.getKey()!="_FREE_") {
                     return false;
                 }
             }
@@ -158,8 +158,6 @@ public class PM2Map<K, V> implements Map<K, V> {
                     V oldVal = pairs[i].getValue(); // falls fuendig, wird value gespeichert zum returnen
 
                     pairs[i] = new MapPaar<K,V>((K) "_FREE_",null);        // das aktuelle element wird auf null gesetzt, da wir es removen
-
-                         // hilfsmethode sortArray wird aufgerufen
 
                     return oldVal;
                 }
