@@ -83,30 +83,19 @@ public class PM2MapTest {
     @Test
     public void testRemove() {
         test.put(007, "James Bond");
-
+        assertEquals(true,test.containsKey(007));
+        assertEquals(true,test.containsValue("James Bond"));
         test.remove(007);
-
-        assertEquals(null, test.get(007));
+        
+        assertEquals(false,test.containsKey(007));
+        
+        assertEquals(false,test.containsValue("James Bond"));
+        
+  
 
     }
 
-    @Test
-    public void testRemoveNotNull() {
-
-        test.put(007, "James bond");
-        test.put("moin", "James bond");
-        test.remove(007);
-        test.remove("moin");
-        
-        MapPaar[] testArr = test.getArray();
-        
-        boolean zero = testArr[0].getKey()=="_FREE_";
-        boolean one = testArr[1].getKey()=="_FREE_";
-        
-        assertEquals(true,zero&&one);
-        
-
-    }
+    
 
     /**
      * Test of putAll method, of class PM2Map.

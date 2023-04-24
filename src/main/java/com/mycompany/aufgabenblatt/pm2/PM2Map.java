@@ -7,6 +7,7 @@ package com.mycompany.aufgabenblatt.pm2;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -18,7 +19,7 @@ import java.util.Set;
 public class PM2Map<K, V> implements Map<K, V> {
 
     private MapPaar<K, V>[] pairs = new MapPaar[0];
-    
+
     private int size = 0;
 
     public PM2Map() {
@@ -56,7 +57,7 @@ public class PM2Map<K, V> implements Map<K, V> {
             return true;
         } else {
             for (MapPaar element : pairs) {
-                if (element != null && element.getKey()!="_FREE_") {
+                if (element != null) {
                     return false;
                 }
             }
@@ -114,28 +115,26 @@ public class PM2Map<K, V> implements Map<K, V> {
          */
 
         for (MapPaar<K, V> element : pairs) {
+
             if (element != null) {
+
                 if (element.getKey().equals(key)) {
                     V oldVal = element.getValue();
                     element.setValue(value);
                     this.size++;
                     return oldVal; // an dieser Stelle wird die Methode verlassen
-                    
+
                 }
             }
         }
 
         //falls nichts gefunden wird, gibts n neuen eintrag
         MapPaar<K, V> entry = new MapPaar(key, value);
-        expand();  // array erweitern weil offensichtlich kein platz
+        expand();  
 
-        for (int i = 0; i < pairs.length; i++) {
-            if (pairs[i] == null || pairs[i].getKey()=="FREE") {
-                pairs[i] = entry;
-                this.size++;
-                break;
-            }
-        }
+        pairs[size]=entry;
+        size++;
+        
         return null;
 
     }
@@ -148,32 +147,40 @@ public class PM2Map<K, V> implements Map<K, V> {
      */
     @Override
     public V remove(Object key) {
+        V oldVal = null;
+        boolean removed = false;
+        int removedAt = 0;
 
         for (int i = 0; i < pairs.length; i++) {
 
-            if (pairs[i] != null) {
+            if (pairs[i] != null && pairs[i].getKey().equals(key)) {
 
-                if (pairs[i].getKey().equals(key)) {         // es wird nach key gesucht
+                oldVal = pairs[i].getValue();
 
-                    V oldVal = pairs[i].getValue(); // falls fuendig, wird value gespeichert zum returnen
+                pairs[i] = null;
 
-                    pairs[i] = new MapPaar<K,V>((K) "_FREE_",null);        // das aktuelle element wird auf null gesetzt, da wir es removen
+                removed = true;
 
-                    this.size--;
-                    
-                    return oldVal;
-                }
+                removedAt = i;
+
+                break;
             }
         }
 
-        return null;        // siehe return in kommentaren
+        if (removed) {
+            for (int i = removedAt; i < pairs.length - 1; i++) {
 
+                pairs[i] = pairs[i + 1];
+
+            }
+        }
+
+        return oldVal;
     }
 
- 
-
     @Override
-    public void putAll(Map<? extends K, ? extends V> m) {
+    public void putAll(Map<? extends K, ? extends V> m
+    ) {
         // loop geht durch alle eintraege der map durch und gibt sie uns einzeln unter der variable "entry"
         for (Map.Entry<? extends K, ? extends V> entry : m.entrySet()) {
             // wir nehmen einfach den key und value aus "entry" und rufen dann immer wieder die methode "put" auf
@@ -192,10 +199,10 @@ public class PM2Map<K, V> implements Map<K, V> {
     public void clear() {
 
         for (int i = 0; i < pairs.length; i++) {
-            pairs[i] = new MapPaar<K,V>((K)"_FREE_",null);
-            
+            pairs[i] = null;
+
         }
-        this.size=0;
+        this.size = 0;
 
     }
 
