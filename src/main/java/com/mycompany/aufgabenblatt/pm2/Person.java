@@ -17,7 +17,7 @@ public class Person implements Comparable<Person> {
     private final LocalDate birthdate;
 
     public Person(String fn, String ln, int kids, LocalDate bd) {
-        assert(kids>=0);
+        assert(kids>=0);        //durch preCon oder exception ersetzen
         
         this.firstName = fn;
         this.lastName = ln;

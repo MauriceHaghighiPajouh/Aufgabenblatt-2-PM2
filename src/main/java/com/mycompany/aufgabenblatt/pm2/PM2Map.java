@@ -53,16 +53,8 @@ public class PM2Map<K, V> implements Map<K, V> {
 
     @Override
     public boolean isEmpty() {
-        if (pairs.length == 0) {
-            return true;
-        } else {
-            for (MapPaar element : pairs) {
-                if (element != null) {
-                    return false;
-                }
-            }
-        }
-        return true;
+        return size == 0;
+
     }
 
     @Override
@@ -121,7 +113,6 @@ public class PM2Map<K, V> implements Map<K, V> {
                 if (element.getKey().equals(key)) {
                     V oldVal = element.getValue();
                     element.setValue(value);
-                    this.size++;
                     return oldVal; // an dieser Stelle wird die Methode verlassen
 
                 }
@@ -130,11 +121,11 @@ public class PM2Map<K, V> implements Map<K, V> {
 
         //falls nichts gefunden wird, gibts n neuen eintrag
         MapPaar<K, V> entry = new MapPaar(key, value);
-        expand();  
+        expand();
 
-        pairs[size]=entry;
+        pairs[size] = entry;
         size++;
-        
+
         return null;
 
     }
@@ -148,10 +139,8 @@ public class PM2Map<K, V> implements Map<K, V> {
     @Override
     public V remove(Object key) {
         V oldVal = null;
-        boolean removed = false;
-        int removedAt = 0;
 
-        for (int i = 0; i < pairs.length; i++) {
+        for (int i = 0; i < size; i++) {
 
             if (pairs[i] != null && pairs[i].getKey().equals(key)) {
 
@@ -159,19 +148,11 @@ public class PM2Map<K, V> implements Map<K, V> {
 
                 pairs[i] = null;
 
-                removed = true;
-
-                removedAt = i;
+                pairs[i] = pairs[size - 1];
+                pairs[size - 1] = null;
+                this.size--;
 
                 break;
-            }
-        }
-
-        if (removed) {
-            for (int i = removedAt; i < pairs.length - 1; i++) {
-
-                pairs[i] = pairs[i + 1];
-
             }
         }
 
@@ -193,12 +174,14 @@ public class PM2Map<K, V> implements Map<K, V> {
         }
 
     }
-
+    
+    //alternativ neues array erstellen 
+    
     // no doc needed
     @Override
     public void clear() {
 
-        for (int i = 0; i < pairs.length; i++) {
+        for (int i = 0; i < this.size; i++) {
             pairs[i] = null;
 
         }
@@ -223,12 +206,12 @@ public class PM2Map<K, V> implements Map<K, V> {
     }
 
     @Override
-    public Collection values() {
+    public Collection<V> values() {
         // das selbe wie oben..
         // hatten theoretisch nochmal ein set zurueck geben koennen
         // stattdessen einfach liste von den values genommen
 
-        List<V> values = new ArrayList<>();
+        List<V> values = new ArrayList<>(size);
         for (MapPaar<K, V> pair : pairs) {
             if (pair != null) {
                 values.add(pair.getValue());
@@ -240,7 +223,7 @@ public class PM2Map<K, V> implements Map<K, V> {
     @Override
     public Set entrySet() {
 
-        Set<Map.Entry<K, V>> entries = new HashSet<>();
+        Set<Map.Entry<K, V>> entries = new HashSet<>(size);
 
         for (MapPaar<K, V> pair : pairs) {
             if (pair != null) {
